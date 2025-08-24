@@ -5,16 +5,15 @@ from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 
 from app.api.security import get_api_key
-from app.core.config import settings
-from app.etl.ingest import ingest_request, load_chunks
+from app.etl.ingest import ingest_request
 from app.models.schemas import IngestRequest, SearchRequest, SearchResponse, SearchResult
 from app.search.indexer import build_index, load_index, search as hybrid_search
 
-app = FastAPI(title="PDF Search")
+app = FastAPI(title="PDF Search", dependencies=[Depends(get_api_key)])
 
 
 @app.post("/ingest", tags=["ingest"])
-def ingest(req: IngestRequest, api_key: str = Depends(get_api_key)) -> dict:
+def ingest(req: IngestRequest) -> dict:
     """Ingest a document (extracted JSON or PDF) and build per-doc index."""
     chunks = ingest_request(req)
     # Build index per document
@@ -23,7 +22,7 @@ def ingest(req: IngestRequest, api_key: str = Depends(get_api_key)) -> dict:
 
 
 @app.post("/search", response_model=SearchResponse, tags=["search"])
-def search(req: SearchRequest, api_key: str = Depends(get_api_key)) -> SearchResponse:
+def search(req: SearchRequest) -> SearchResponse:
     """Search within a document. Supports modality: text | image | multimodal (default)."""
     if not req.doc_id:
         # For demo simplicity, require doc_id to scope search
