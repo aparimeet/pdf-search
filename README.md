@@ -1,4 +1,4 @@
-## FlowAutomate PDF Search (Hybrid RAG)
+## PDF Search (Hybrid RAG)
 
 Search paragraphs, tables, and images extracted from PDFs with a secure FastAPI service. Combines lexical TF‑IDF, semantic embeddings, and CLIP image-text alignment (multimodal RAG). Per‑document indexing and retrieval.
 
