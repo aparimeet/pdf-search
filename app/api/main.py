@@ -10,7 +10,7 @@ from app.etl.ingest import ingest_request, load_chunks
 from app.models.schemas import IngestRequest, SearchRequest, SearchResponse, SearchResult
 from app.search.indexer import build_index, load_index, search as hybrid_search
 
-app = FastAPI(title="FlowAutomate PDF Search")
+app = FastAPI(title="PDF Search")
 
 
 @app.post("/ingest", tags=["ingest"])
