@@ -1,0 +1,46 @@
+{
+  "doc_id": "sample_doc_2",
+  "title": "Product Technical Overview",
+  "paragraphs": [
+    {
+      "text": "This technical document describes system architecture and deployment considerations.",
+      "page": 1
+    },
+    {
+      "text": "Latency improvements were achieved by caching and query optimizations.",
+      "page": 2
+    },
+    {
+      "text": "We also provide an overview of scaling strategies for increased load.",
+      "page": 3
+    }
+  ],
+  "tables": [
+    {
+      "rows": [
+        [
+          "Quarter",
+          "Revenue",
+          "Growth"
+        ],
+        [
+          "Q1",
+          "$1.2M",
+          "10%"
+        ],
+        [
+          "Q2",
+          "${}",
+          "1.5%"
+        ]
+      ],
+      "page": 2
+    }
+  ],
+  "images": [
+    {
+      "caption": "Figure 1: Revenue trend",
+      "page": 3
+    }
+  ]
+}

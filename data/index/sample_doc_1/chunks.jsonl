@@ -1,0 +1,5 @@
+{"chunk_id":"sample_doc_1::p::0::e9d5f6a3","doc_id":"sample_doc_1","text":"This document summarizes the quarterly performance including revenue and growth by segment.","type":"paragraph","page":1,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_1::p::1::3c8767f0","doc_id":"sample_doc_1","text":"In Q2, revenue growth accelerated due to marketing spend and new product launches.","type":"paragraph","page":2,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_1::p::2::38c4af62","doc_id":"sample_doc_1","text":"The table shows revenue figures and growth percentages for key quarters.","type":"paragraph","page":3,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_1::t::0::0b9f3633","doc_id":"sample_doc_1","text":"Quarter\tRevenue\tGrowth\nQ1\t$1.2M\t10%\nQ2\t${}\t1.5%","type":"table","page":2,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_1::i::0::5006f361","doc_id":"sample_doc_1","text":"Figure 1: Revenue trend","type":"image","page":3,"metadata":{"source":"json"}}

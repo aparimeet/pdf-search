@@ -1,0 +1,46 @@
+{
+  "doc_id": "sample_doc_1",
+  "title": "Quarterly Financial Summary",
+  "paragraphs": [
+    {
+      "text": "This document summarizes the quarterly performance including revenue and growth by segment.",
+      "page": 1
+    },
+    {
+      "text": "In Q2, revenue growth accelerated due to marketing spend and new product launches.",
+      "page": 2
+    },
+    {
+      "text": "The table shows revenue figures and growth percentages for key quarters.",
+      "page": 3
+    }
+  ],
+  "tables": [
+    {
+      "rows": [
+        [
+          "Quarter",
+          "Revenue",
+          "Growth"
+        ],
+        [
+          "Q1",
+          "$1.2M",
+          "10%"
+        ],
+        [
+          "Q2",
+          "${}",
+          "1.5%"
+        ]
+      ],
+      "page": 2
+    }
+  ],
+  "images": [
+    {
+      "caption": "Figure 1: Revenue trend",
+      "page": 3
+    }
+  ]
+}

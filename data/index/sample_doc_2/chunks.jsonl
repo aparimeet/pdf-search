@@ -1,0 +1,5 @@
+{"chunk_id":"sample_doc_2::p::0::6a4669c1","doc_id":"sample_doc_2","text":"This technical document describes system architecture and deployment considerations.","type":"paragraph","page":1,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_2::p::1::fc9eface","doc_id":"sample_doc_2","text":"Latency improvements were achieved by caching and query optimizations.","type":"paragraph","page":2,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_2::p::2::19ff4b29","doc_id":"sample_doc_2","text":"We also provide an overview of scaling strategies for increased load.","type":"paragraph","page":3,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_2::t::0::e6480ccd","doc_id":"sample_doc_2","text":"Quarter\tRevenue\tGrowth\nQ1\t$1.2M\t10%\nQ2\t${}\t1.5%","type":"table","page":2,"metadata":{"source":"json"}}
+{"chunk_id":"sample_doc_2::i::0::6179ab47","doc_id":"sample_doc_2","text":"Figure 1: Revenue trend","type":"image","page":3,"metadata":{"source":"json"}}
