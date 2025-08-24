@@ -1,6 +1,6 @@
 """Hybrid RAG indexer for text and images (PDF chunks).
 
-Builds TF-IDF and optional embedding indexes, and supports FAISS acceleration.
+Builds TF-IDF and optional embedding indexes.
 """
 from __future__ import annotations
 
@@ -16,8 +16,6 @@ from rapidfuzz import fuzz
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from PIL import Image
-
-faiss = None  # FAISS removed; we use Weaviate for vector search
 
 try:
     from sentence_transformers import SentenceTransformer
@@ -35,19 +33,16 @@ class HybridIndex:
     tfidf_path: Path
     meta_path: Path
     embed_path: Optional[Path]
-    faiss_path: Optional[Path]
 
     # runtime
     vectorizer: Optional[TfidfVectorizer] = None
     tfidf_matrix: Optional[np.ndarray] = None
     chunks: Optional[List[Chunk]] = None
     embed_matrix: Optional[np.ndarray] = None
-    faiss_index: Optional[object] = None
     embed_model: Optional[SentenceTransformer] = None
     # image embeddings
     image_matrix: Optional[np.ndarray] = None
     image_indices: Optional[List[int]] = None
-    image_faiss_index: Optional[object] = None
 
 
 def _load_embed_model() -> Optional[SentenceTransformer]:
@@ -86,7 +81,6 @@ def _prep_paths(doc_id: str) -> HybridIndex:
         tfidf_path=base / "tfidf.joblib",
         meta_path=base / "chunks.jsonl",
         embed_path=base / "embeddings.npy",
-        faiss_path=None,
         # multimodal
     )
 
@@ -95,8 +89,8 @@ def build_index(doc_id: str, chunks: List[Chunk]) -> HybridIndex:
     """Build per-document hybrid index.
 
     - TF-IDF for lexical matching
-    - Optional text embeddings (+FAISS)
-    - Optional image embeddings (+FAISS)
+    - Optional text embeddings
+    - Optional image embeddings
     Persists artifacts under data/index/<doc_id>/
     """
     paths = _prep_paths(doc_id)
@@ -124,7 +118,6 @@ def build_index(doc_id: str, chunks: List[Chunk]) -> HybridIndex:
     # Embeddings (optional)
     embed_model = _load_embed_model()
     embed_matrix = None
-    faiss_index = None
     if embed_model is not None:
         try:
             embed_matrix = embed_model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
@@ -137,7 +130,6 @@ def build_index(doc_id: str, chunks: List[Chunk]) -> HybridIndex:
                 pass
         except Exception:
             embed_matrix = None
-            faiss_index = None
 
     # Image embeddings using CLIP (if available) via sentence-transformers
     image_matrix = None
@@ -186,12 +178,10 @@ def build_index(doc_id: str, chunks: List[Chunk]) -> HybridIndex:
         tfidf_path=paths.tfidf_path,
         meta_path=paths.meta_path,
         embed_path=paths.embed_path if embed_model is not None else None,
-        faiss_path=paths.faiss_path if (embed_model is not None and faiss is not None) else None,
         vectorizer=vectorizer,
         tfidf_matrix=tfidf_matrix,
         chunks=chunks,
         embed_matrix=embed_matrix,
-        faiss_index=faiss_index,
         embed_model=embed_model,
         image_matrix=image_matrix,
         image_indices=image_indices or None,
@@ -221,7 +211,6 @@ def load_index(doc_id: str) -> HybridIndex:
 
     # Load embeddings (if available)
     embed_matrix = None
-    faiss_index = None
     embed_model = None
     if paths.embed_path.exists():
         try:
@@ -229,12 +218,10 @@ def load_index(doc_id: str) -> HybridIndex:
             embed_model = _load_embed_model()
         except Exception:
             embed_matrix = None
-    # FAISS removed
 
     # Load image embeddings and indices if present
     image_matrix = None
     image_indices = None
-    image_faiss_index = None
     try:
         image_path = paths.meta_path.parent / "image_embeddings.npy"
         index_path = paths.meta_path.parent / "image_indices.json"
@@ -243,26 +230,21 @@ def load_index(doc_id: str) -> HybridIndex:
         if index_path.exists():
             with index_path.open("r", encoding="utf-8") as f:
                 image_indices = json.load(f)
-        # FAISS removed
     except Exception:
         image_matrix = None
         image_indices = None
-        image_faiss_index = None
 
     return HybridIndex(
         tfidf_path=paths.tfidf_path,
         meta_path=paths.meta_path,
         embed_path=paths.embed_path if embed_matrix is not None else None,
-        faiss_path=paths.faiss_path if faiss_index is not None else None,
         vectorizer=vectorizer,
         tfidf_matrix=tfidf_matrix,
         chunks=chunks,
         embed_matrix=embed_matrix,
-        faiss_index=faiss_index,
         embed_model=embed_model,
         image_matrix=image_matrix,
         image_indices=image_indices,
-        image_faiss_index=image_faiss_index,
     )
 
 
